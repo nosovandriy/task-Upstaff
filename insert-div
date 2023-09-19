@@ -1,0 +1,106 @@
+const baseWrapperStyles = `
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0.5rem;
+  box-sizing: border-box;
+`;
+
+const wrapperMobileStyles = `
+  ${baseWrapperStyles}
+  height: 425px;
+  width: calc(100% - 2rem);
+  margin: 0.2rem 0;
+`;
+
+const wrapperTabletStyles = `
+  ${baseWrapperStyles}
+  width: 61%;
+  margin: 1rem 0;
+`;
+
+const wrapperDesktopStyles = `
+  ${baseWrapperStyles}
+  width: 50%;
+  margin: 1rem 0;
+`;
+
+const topSectionStyles = `
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 28px;
+  flex-grow: 1;
+  padding: 1rem;
+  box-shadow: 1px 1px 5px 5px #f1f1f1;
+  border-radius: 10px;
+  background: #fff;
+`;
+
+const bottomSectionStyles = `
+  margin-top: 0.3rem;
+  padding: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.7rem;
+`;
+
+const buttonStyles = `
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 250px;
+  padding: 0.7rem;
+  height: 0.75rem;
+  color: #fff;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  background-color: #000;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const wrapperElement = document.createElement("div");
+const topSection = document.createElement("div");
+const bottomSection = document.createElement("div");
+const title = document.createElement("h1");
+const button = document.createElement("a");
+
+title.innerText = "andriynosov.com";
+bottomSection.innerText = "Frontend developer";
+button.innerText = "Visit Website";
+button.href = "https://andriynosov.com/";
+button.target = "_blank";
+
+topSection.style.cssText = topSectionStyles;
+bottomSection.style.cssText = bottomSectionStyles;
+button.style.cssText = buttonStyles;
+
+topSection.append(title, button);
+wrapperElement.append(topSection, bottomSection);
+
+const changeResolution = () => {
+  if (window.innerWidth >= 1200) {
+    wrapperElement.style.cssText = wrapperDesktopStyles;
+    const selectedProduct = document.querySelectorAll(".product-item")[4];
+    selectedProduct.before(wrapperElement);
+  } else if (window.innerWidth >= 768) {
+    wrapperElement.style.cssText = wrapperTabletStyles;
+    const selectedProduct = document.querySelectorAll(".product-item")[3];
+    selectedProduct.before(wrapperElement);
+  } else {
+    wrapperElement.style.cssText = wrapperMobileStyles;
+    const selectedProduct = document.querySelectorAll(".product-item")[3];
+    selectedProduct.after(wrapperElement);
+  }
+};
+
+changeResolution();
+window.addEventListener("resize", changeResolution);
