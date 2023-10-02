@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>replit</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<style>
+		html {
+			height: 100%;
+			width: 100%;
+		}
+
+		main {
+			display: flex;
+			flex-direction: row;
+			gap: 20px;
+		}
+
+		li {
+			cursor: pointer;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<div>
+			<div>First column</div>
+			<ul class="firstColumn"></ul>
+		</div>
+
+		<div>
+			<div>Second column</div>
+			<ul class="secondColumn"></ul>
+		</div>
+	</main>
+
+	<script>
+		const firstArray = ["3", "2", "1", "4", "5"];
+		const secondArray = ["c", "b", "a", "d", "e"];
+
+		const firstUl = document.querySelector(".firstColumn");
+		const secondUl = document.querySelector(".secondColumn");
+
+		function sortAndRender(arrayList, ulTag, className) {
+			const sortArray = arrayList.sort((a, b) => a.localeCompare(b));
+			ulTag.innerHTML = "";
+
+			for (const num of sortArray) {
+				const list = document.createElement("li");
+				list.className = className;
+				list.innerText = num;
+
+				ulTag.append(list);
+			}
+		}
+
+		sortAndRender(firstArray, firstUl, "firstLiList");
+		sortAndRender(secondArray, secondUl, "secondLiList");
+
+		function handleClick(event, sourceUl, targetUl) {
+			const li = Array.from(sourceUl.children).findIndex(
+				(item) => item.innerText === event.target.innerText
+			);
+			sourceUl.children[li].remove();
+
+			const list = document.createElement("li");
+			list.innerText = event.target.innerText;
+			targetUl.append(list);
+
+			const newFirstList = [...firstUl.children].map((item) => item.innerText);
+			const newSecondList = [...secondUl.children].map((item) => item.innerText);
+			sortAndRender(newFirstList, firstUl, "firstLiList");
+			sortAndRender(newSecondList, secondUl, "secondLiList");
+		}
+
+		firstUl.addEventListener("click", (event) => {
+			handleClick(event, firstUl, secondUl);
+		});
+
+		secondUl.addEventListener("click", (event) => {
+			handleClick(event, secondUl, firstUl);
+		});
+
+	</script>
+</body>
+
+</html>
